@@ -31,7 +31,7 @@ public class SpringbootApplicationTests {
 
 	@Test
 	public void sendRcsMessage() {
-//		String senderNumber = "15757855329";
+//		String senderNumber =     "15757855329";
 //		String recvNumber = "15657821663";
 //		RcsMsgService.MsgMediaType msgMediaType = RcsMsgService.MsgMediaType.text;
 //		String title = "中国移动通信集团公司计划建设部(通知)";
