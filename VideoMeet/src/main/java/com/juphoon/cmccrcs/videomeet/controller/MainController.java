@@ -107,9 +107,6 @@ public class MainController {
         return modelAndView;
     }
 
-
-
-
     @RequestMapping ( "/getSendVideoMeetList/{phone}")
     @ResponseBody
     public String getSendVideoMeetList(@PathVariable String phone) {
@@ -127,7 +124,7 @@ public class MainController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.element("unreadCount", unreadCount);
 
-        jsonObject.element("videoMeetInfoList",pageInfo);
+        jsonObject.element("videoMeetInfoList",pageInfo.getList());
         jsonObject.element("total",pageInfo.getTotal());
 
         //System.out.println(jsonObject.toString());
@@ -152,7 +149,7 @@ public class MainController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.element("unreadCount", unreadCount);
 
-        jsonObject.element("videoMeetInfoList",pageInfo);
+        jsonObject.element("videoMeetInfoList",pageInfo.getList());
         jsonObject.element("total",pageInfo.getTotal());
 
         // System.out.println(jsonObject.toString());
