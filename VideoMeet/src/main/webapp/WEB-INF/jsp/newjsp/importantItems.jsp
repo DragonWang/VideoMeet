@@ -3,7 +3,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>我创建的事项</title>
-	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/dropload.css">
 	<link rel="stylesheet" href="css/main.css">
 	<style>
@@ -134,10 +134,10 @@
 		<div class="add hidden-md hidden-lg"><a href="createMeeting.html"><img src="image/add-2.png" alt=""></a></div>
 	</div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="js/dropload.min.js"></script>
-<script src="js/main.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/dropload.min.js"></script>
+<script src="/js/main.js"></script>
 <script>
 	
 	//下拉刷新，上拉加载事件对象

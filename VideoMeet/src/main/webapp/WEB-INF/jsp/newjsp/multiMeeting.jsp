@@ -3,7 +3,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>多方视频会议</title>
-	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/dropload.css">
 	<link rel="stylesheet" href="/css/main.css">
 	<link rel="stylesheet" href="/css/animate.css">
@@ -15,27 +15,30 @@
 		@media (min-width:992px){
 			.list-container{
 				position:relative;
-				top:-45px;
+				top:-90px;
 			}
 		}
-		
 	</style>
 </head>
 <body>
-	<div class="head-bar text-center">多方视频会议</div>
+	<div class="head-bar-container text-center">
+        <div class="head-bar">多方视频会议</div>
+        <div class="tab-container clearfix">
+            <!-- 移动端页面显示的标签 -->
+            <div class="mobile-tab-container row hidden-md hidden-lg">
+                <div class="tab mobile-tab col-xs-6 selected">我发起的</div>
+                <div class="tab mobile-tab col-xs-6">我收到的</div>
+            </div>
+        </div>
+    </div>
 	<div class="container text-center">
-		<div class="tab-container clearfix">
-			<!-- 移动端页面显示的标签 -->
-			<div class="mobile-tab-container row hidden-md hidden-lg">
-				<div class="tab mobile-tab col-xs-6 selected">我发起的</div>
-				<div class="tab mobile-tab col-xs-6">我收到的</div>
-			</div>
-			<!-- PC端页面显示的标签 -->
-			<ul class="pc-tab-container nav nav-pills nav-stacked navbar-left  hidden-xs hidden-sm">
-				<li class="tab pc-tab selected">我发起的</li>
-				<li class="tab pc-tab">我收到的</li>
-			</ul>		
-		</div>
+        <div class="tab-container clearfix">
+            <!-- PC端页面显示的标签 -->
+            <ul class="pc-tab-container nav nav-pills nav-stacked navbar-left  hidden-xs hidden-sm">
+                <li class="tab pc-tab selected">我发起的</li>
+                <li class="tab pc-tab">我收到的</li>
+            </ul>       
+        </div>
 		<div class="list-container">
 			<div class="list list-1 text-left animated" id="list-1"></div>
 			<div class="list list-2 text-left animated"></div>
@@ -54,8 +57,8 @@
 		</ul>	
 	</div>
 </body>
-<script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 <script src="/js/dropload.min.js"></script>
 <script src="/js/main.js"></script>
 <script>
@@ -110,7 +113,6 @@
                         result = "";
                         for (var i = 0; i < obj.videoMeetInfoList.length; i++) {
                             result += '<div class="item"><a href="/VideoMeet/showVideoMeetInfoDetail/'+obj.videoMeetInfoList[i].meetId +'"><div class="item-time"><b>' + obj.videoMeetInfoList[i].meetDatetime + '</b></div><div class="item-theme">会议主题:' + obj.videoMeetInfoList[i].meetSubject + '</div><div class="item-id">会议ID&nbsp;&nbsp;&nbsp;&nbsp;' + obj.videoMeetInfoList[i].meetId + '</div></a></div>';
-
                         }
                         $('.list').eq(itemIndex).empty();
                         $('.list').eq(itemIndex).append(result);
