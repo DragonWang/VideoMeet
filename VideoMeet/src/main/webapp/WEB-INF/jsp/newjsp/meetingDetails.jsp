@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" href="/css/main.css">
+	<script type="text/javascript" src="/js/index.js"></script>
 	<style>
 		.nav-bar{
 			height:60px;
@@ -22,7 +23,6 @@
 			background-color:rgb(0, 197, 195);
 			margin-bottom:10px;
 			font-size:16px;
-
 			margin-bottom: 20px;
 		}
 		.resend{
@@ -59,10 +59,11 @@
 	</table>
 	<div class="btn-group btn-group-justified">
 		<div class="btn-group">
-			<button class="btn btn-primary join">加入会议</button>
+			<button id="joinMeetBtn" class="btn btn-primary join">加入会议</button>
 		</div>
 		<div class="btn-group">
-			<button class="btn resend">重新发送通知</button>
+
+			<button id="notifyMeetBtn" class="btn resend">重新发送通知</button>
 		</div>
 	</div>
 
@@ -76,10 +77,11 @@
 	<div class="add hidden-md hidden-lg"><a href="createMeeting.jsp"><img src="/img/add-2.png" alt=""></a></div>
 </div>
 
-</div>
+
 
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
+
     var szJsonStr = '<s:property escapeJavaScript="false" escape="false" value="sendCommandList" />';
     var membersJsonArray = ${videoMeetInfo.members};
     var txt='';
@@ -90,6 +92,108 @@
     //alert(txt);
     $("#demo").append(txt);
 </script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
 
+    var currentPhone = '${currentPhone}';
+    var currentName = '${currentName}';
+    var isChairman = '${isChairman}';
+    var isMeetMember = false;
+
+    var szJsonStr = '<s:property escapeJavaScript="false" escape="false" value="sendCommandList" />';
+    var membersJsonArray = ${videoMeetInfo.members};
+    for (var index = 0; index < membersJsonArray.length; index++)
+	{
+       // var memberJson = membersJsonArray[index];
+          // alert(membersJsonArray[index].phone);
+           //alert(currentPhone);
+        if (currentPhone == membersJsonArray[index].phone || currentPhone == ${videoMeetInfo.chairmanPhone})
+        {
+            isMeetMember = true;
+          //  alert(isMeetMember);
+              break;
+        }
+       // alert(isMeetMember);
+	}
+	//alert(isMeetMember);
+    var joinMeetBtn = document.body.querySelector("#joinMeetBtn");
+    var notifyMeetBtn = document.body.querySelector("#notifyMeetBtn");
+    joinMeetBtn.addEventListener("click", function () {
+        if (isMeetMember) {
+            alert("hello");
+            checkAppInstalled();
+        } else
+		{
+            alert("您不属于该视频会议的成员，无法加入会议");
+        }
+    });
+
+       alert(isChairman);
+    if (isChairman == '1')
+     {
+        $(joinMeetBtn).css("margin-left","8.333333%");
+        notifyMeetBtn.addEventListener("click", function () {
+            sendMeetNotify();
+        });
+    }
+    else
+        {
+        $(notifyMeetBtn).hide();
+        $(joinMeetBtn).css("margin-left","29.166666%");
+        }
+
+    function afterRecvAppStatus()
+	  {
+        joinVideoMeet();
+       }
+    notifyMeetBtn.addEventListener('tap', function () {
+        sendMeetNotify();
+    });
+
+    function joinVideoMeet() {
+        var meetId = '${videoMeetInfo.meetId}';
+        var meetPassword = '${videoMeetInfo.meetPassword}';
+        var displayName;
+        if (currentPhone == '')
+        {
+            displayName = '';
+        }
+        else
+		{
+            displayName = currentName == '' ? currentPhone : currentName;
+        }
+        openAppWithJoinMeet(meetId, "", displayName);
+    }
+
+    function hideTipContent() {
+        $("#tipContent").css("display","none");
+        $("#mainContent").show();
+        $("#joinMeetBtn").show();
+    }
+
+
+    function sendMeetNotify() {
+        $.ajax({
+            data:{},
+            url:'/VideoMeet/sendMeetNotify/'+${videoMeetInfo.meetId},
+            type: 'get', //HTTP请求类型
+            timeout: 5000, //超时时间设置为10秒；
+            success: function(data) {
+                console.log(data);
+                if ('ok' == data)
+                {
+                    alert('发送通知成功');
+                }
+                else
+				{
+                    alert('发送通知失败');
+                }
+            },
+            error: function(xhr, type, errorThrown) {
+                alert('服务器内部连接超时，请稍后再试');
+            }
+        });
+    }
+</script>
 </body>
 </html>
