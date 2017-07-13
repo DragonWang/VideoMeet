@@ -79,8 +79,9 @@ li.pc-tab.selected{
 	height:100%;
 }
 .to-top{
-	bottom:40px;
-	left:72%;
+	display:none;
+	bottom:50px;
+	right:5%;
 }
 @media (min-width:992px){
 	.head-bar{

@@ -192,6 +192,16 @@
                 }
             }
         });
+
+        window.onscroll = function(){
+           var scrollDistance= document.documentElement.scrollTop || document.body.scrollTop; 
+            if( scrollDistance >= 100 ) {
+                $('.to-top').show();
+            }else{
+                $('.to-top').hide();
+            }
+        }
+
     });
 </script>
 </html>
