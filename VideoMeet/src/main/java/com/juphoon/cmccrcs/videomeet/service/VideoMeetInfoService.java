@@ -1,5 +1,6 @@
 package com.juphoon.cmccrcs.videomeet.service;
 
+import com.github.pagehelper.PageInfo;
 import com.juphoon.cmccrcs.videomeet.entity.VideoMeetInfo;
 import com.juphoon.cmccrcs.videomeet.entity.VideoMeetInfoVO;
 
@@ -10,8 +11,8 @@ import java.util.List;
  */
 public interface VideoMeetInfoService {
 
-    public List<VideoMeetInfo> selectSendVideoMeetInfoList(String phone, int offset, int limit);
-    public List<VideoMeetInfoVO> selectRecvVideoMeetInfoList(String phone, int offset, int limit);
+    public PageInfo<VideoMeetInfo> selectSendVideoMeetInfoList(String phone, int offset, int limit);
+    public PageInfo<VideoMeetInfoVO> selectRecvVideoMeetInfoList(String phone, int offset, int limit);
 
     public VideoMeetInfo selectOneByMeetId(int meetId);
 

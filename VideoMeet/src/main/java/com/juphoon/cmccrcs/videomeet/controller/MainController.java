@@ -1,5 +1,6 @@
 package com.juphoon.cmccrcs.videomeet.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.juphoon.cmccrcs.videomeet.common.PageHelperEntity;
 import com.juphoon.cmccrcs.videomeet.entity.VideoMeetInfo;
 import com.juphoon.cmccrcs.videomeet.entity.VideoMeetInfoVO;
@@ -33,9 +34,9 @@ import java.util.*;
 @Controller
 @RequestMapping("/VideoMeet")
 public class MainController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-            
+
     @Autowired
     private VideoMeetInfoService videoMeetInfoService;
     @Autowired
@@ -72,7 +73,8 @@ public class MainController {
     public String videoMeetListWithPhone(HttpSession httpSession, Model model, @PathVariable String currentPhone) {
         model.addAttribute("currentPhone", currentPhone);
         httpSession.setAttribute("currentPhone", currentPhone);
-        return "videoMeetList";
+       return "newjsp/multiMeeting";
+        //return "videoMeetList";
     }
 
     @RequestMapping(value="/videoMeetList", method = RequestMethod.GET)
@@ -82,8 +84,10 @@ public class MainController {
             model.addAttribute("currentPhone", currentPhone);
             httpSession.setAttribute("currentPhone", currentPhone);
         }
-        return "videoMeetList";
+        return "newjsp/multiMeeting";
+       // return "videoMeetList";
     }
+
 
     @RequestMapping("/method")
     public String method() {
@@ -113,13 +117,20 @@ public class MainController {
             size = pageHelperEntity.getSize();
         }
         int unreadCount = videoMeetMemberService.unreadCountByMemberPhone(phone);
-        List<VideoMeetInfo> videoMeetInfoList = videoMeetInfoService.selectSendVideoMeetInfoList(phone, start, size);
+
+       // PageInfo<VideoMeetInfo> videoMeetInfoList = videoMeetInfoService.selectSendVideoMeetInfoList(phone, start, size);
+        PageInfo<VideoMeetInfo> pageInfo = videoMeetInfoService.selectSendVideoMeetInfoList(phone, start, size);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.element("unreadCount", unreadCount);
-        jsonObject.element("videoMeetInfoList",videoMeetInfoList);
+
+        jsonObject.element("videoMeetInfoList",pageInfo.getList());
+        jsonObject.element("total",pageInfo.getTotal());
+
+        //System.out.println(jsonObject.toString());
         return jsonObject.toString();
     }
+
 
     @RequestMapping ( "/getRecvVideoMeetList/{phone}")
     @ResponseBody
@@ -134,11 +145,14 @@ public class MainController {
 //            videoMeetMemberService.updateUnreadByMemberPhone(phone);
 //        }
         int unreadCount = videoMeetMemberService.unreadCountByMemberPhone(phone);
-        List<VideoMeetInfoVO> videoMeetInfoList = videoMeetInfoService.selectRecvVideoMeetInfoList(phone, start, size);
-
+        PageInfo<VideoMeetInfoVO> pageInfo = videoMeetInfoService.selectRecvVideoMeetInfoList(phone, start, size);
         JSONObject jsonObject = new JSONObject();
         jsonObject.element("unreadCount", unreadCount);
-        jsonObject.element("videoMeetInfoList",videoMeetInfoList);
+
+        jsonObject.element("videoMeetInfoList",pageInfo.getList());
+        jsonObject.element("total",pageInfo.getTotal());
+
+        // System.out.println(jsonObject.toString());
         return jsonObject.toString();
     }
 
@@ -180,9 +194,12 @@ public class MainController {
             model.put("currentPhone", currentPhone);
         }
 
+        System.out.println(model.get("currentPhone"));
+        System.out.print(model);
 //        List<VideoMeetMember> videoMeetMemberList = videoMeetMemberService.selectMemberListByMeetId(meetId);
 //        map.put("videoMeetMemberList", JSONArray.fromObject(videoMeetMemberList).toString());
-        return new ModelAndView("videoMeetDetail", model);
+        //return new ModelAndView("videoMeetDetail", model);
+        return new ModelAndView("newjsp/meetingDetails", model);
     }
 
     @RequestMapping (value = "/startVideoMeet", method = RequestMethod.POST)

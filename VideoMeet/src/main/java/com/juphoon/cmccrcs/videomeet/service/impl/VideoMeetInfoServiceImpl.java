@@ -23,31 +23,40 @@ public class VideoMeetInfoServiceImpl implements VideoMeetInfoService {
     private VideoMeetInfoMapper videoMeetInfoMapper;
 
     @Override
-    public List<VideoMeetInfo> selectSendVideoMeetInfoList(String phone, int start, int size) {
+    public PageInfo<VideoMeetInfo> selectSendVideoMeetInfoList(String phone, int start, int size) {
+
         PageHelper.startPage(start, size).setOrderBy("meet_id desc");
         VideoMeetInfoExample example = new VideoMeetInfoExample();
         VideoMeetInfoExample.Criteria criteria = example.createCriteria();
         criteria.andChairmanPhoneEqualTo(phone);
+
         List<VideoMeetInfo> resultList = videoMeetInfoMapper.selectByExample(example);
         PageInfo<VideoMeetInfo> pageInfo = new PageInfo<VideoMeetInfo>(resultList);
-        if (pageInfo.getTotal() - (start-1)*size < 0) {
-            return new ArrayList<VideoMeetInfo>();
-        } else {
-            return pageInfo.getList();
-        }
+
+       // if (pageInfo.getTotal() - (start-1)*size < 0)
+       // {
+        //    return new ArrayList<VideoMeetInfo>();
+       // }
+       // else
+      //  {
+       //     return pageInfo.getList();
+      //  }
+        return pageInfo;
     }
 
     @Override
-    public List<VideoMeetInfoVO> selectRecvVideoMeetInfoList(String phone, int start, int size) {
+    public PageInfo<VideoMeetInfoVO> selectRecvVideoMeetInfoList(String phone, int start, int size) {
         PageHelper.startPage(start, size).setOrderBy("meet_id desc");
         List<VideoMeetInfoVO> resultList = videoMeetInfoMapper.selectByMemberPhone(phone);
         PageInfo<VideoMeetInfoVO> pageInfo = new PageInfo<VideoMeetInfoVO>(resultList);
 
-        if (pageInfo.getTotal() - (start-1)*size < 0) {
-            return new ArrayList<VideoMeetInfoVO>();
-        } else {
-            return pageInfo.getList();
-        }
+        //if (pageInfo.getTotal() - (start-1)*size < 0) {
+        //    return new ArrayList<VideoMeetInfoVO>();
+       // } else
+      //  {
+       //     return pageInfo.getList();
+       // }
+        return pageInfo;
     }
 
     @Override
