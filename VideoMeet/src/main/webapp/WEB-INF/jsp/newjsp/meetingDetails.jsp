@@ -88,7 +88,6 @@
     {
     txt+='<a class="list-group-item">'+membersJsonArray[index].name+'</a>';
 	}
-    //alert(txt);
     $("#demo").append(txt);
 </script>
 
@@ -98,8 +97,6 @@
 <script type="text/javascript">
     var currentPhone = '${currentPhone}';
     var currentName = '${currentName}';
-   // var isChairman = '${isChairman}';
-
     var isMeetMember = false;
     var szJsonStr = '<s:property escapeJavaScript="false" escape="false" value="sendCommandList" />';
     var membersJsonArray = ${videoMeetInfo.members};
@@ -116,7 +113,8 @@
     joinMeetBtn.addEventListener("click", function () {
         if (isMeetMember)
 		{
-            checkAppInstalled();
+            joinVideoMeet();
+          //  checkAppInstalled();
         }
         else
 		{
@@ -128,7 +126,7 @@
 	 {
 	     isChairman=1;
 	 }
-	 alert(isChairman);
+	// alert(isChairman);
 
     if (isChairman == '1')
      {
