@@ -202,7 +202,6 @@
 			$('#title').focus();
 		}else if($('#datetimepicker').val()===""){
 			$('#popup-content').text('请选择会议时间');
-			$('#datetimepicker').focus();
 		}else if($('#content').val()===""){
 			$('#popup-content').text('请输入会议内容');
 			$('#content').focus();
