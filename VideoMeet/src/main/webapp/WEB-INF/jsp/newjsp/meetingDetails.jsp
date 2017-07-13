@@ -40,7 +40,7 @@
 
 </head>
 <body>
-<div class="nav-bar text-center">会议详情</div>
+<!-- <div class="nav-bar text-center">会议详情</div> -->
 <div class="container">
 	<table class="detail table">
 		<tr>
@@ -81,7 +81,6 @@
 
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-
     var szJsonStr = '<s:property escapeJavaScript="false" escape="false" value="sendCommandList" />';
     var membersJsonArray = ${videoMeetInfo.members};
     var txt='';
@@ -92,43 +91,45 @@
     //alert(txt);
     $("#demo").append(txt);
 </script>
-<script src="/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
 
+
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
     var currentPhone = '${currentPhone}';
     var currentName = '${currentName}';
-    var isChairman = '${isChairman}';
-    var isMeetMember = false;
+   // var isChairman = '${isChairman}';
 
+    var isMeetMember = false;
     var szJsonStr = '<s:property escapeJavaScript="false" escape="false" value="sendCommandList" />';
     var membersJsonArray = ${videoMeetInfo.members};
     for (var index = 0; index < membersJsonArray.length; index++)
 	{
-       // var memberJson = membersJsonArray[index];
-          // alert(membersJsonArray[index].phone);
-           //alert(currentPhone);
-        if (currentPhone == membersJsonArray[index].phone || currentPhone == ${videoMeetInfo.chairmanPhone})
+		if (currentPhone == membersJsonArray[index].phone || currentPhone == ${videoMeetInfo.chairmanPhone})
         {
             isMeetMember = true;
-          //  alert(isMeetMember);
               break;
         }
-       // alert(isMeetMember);
 	}
-	//alert(isMeetMember);
     var joinMeetBtn = document.body.querySelector("#joinMeetBtn");
     var notifyMeetBtn = document.body.querySelector("#notifyMeetBtn");
     joinMeetBtn.addEventListener("click", function () {
-        if (isMeetMember) {
-            alert("hello");
+        if (isMeetMember)
+		{
             checkAppInstalled();
-        } else
+        }
+        else
 		{
             alert("您不属于该视频会议的成员，无法加入会议");
         }
     });
+     var isChairman=0;
+     if(currentPhone == ${videoMeetInfo.chairmanPhone})
+	 {
+	     isChairman=1;
+	 }
+	 alert(isChairman);
 
-       alert(isChairman);
     if (isChairman == '1')
      {
         $(joinMeetBtn).css("margin-left","8.333333%");
