@@ -40,7 +40,7 @@
 
 </head>
 <body>
-<!-- <div class="nav-bar text-center">会议详情</div> -->
+<div class="nav-bar text-center">会议详情</div>
 <div class="container">
 	<table class="detail table">
 		<tr>
@@ -77,8 +77,6 @@
 	<div class="add hidden-md hidden-lg"><a href="createMeeting.jsp"><img src="/img/add-2.png" alt=""></a></div>
 </div>
 
-
-
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
     var szJsonStr = '<s:property escapeJavaScript="false" escape="false" value="sendCommandList" />';
@@ -113,8 +111,7 @@
     joinMeetBtn.addEventListener("click", function () {
         if (isMeetMember)
 		{
-            joinVideoMeet();
-          //  checkAppInstalled();
+           checkAppInstalled();
         }
         else
 		{
@@ -125,11 +122,9 @@
      if(currentPhone == ${videoMeetInfo.chairmanPhone})
 	 {
 	     isChairman=1;
-	 }
-	// alert(isChairman);
-
-    if (isChairman == '1')
-     {
+	// }
+    //if (isChairman == '1')
+    // {
         $(joinMeetBtn).css("margin-left","8.333333%");
         notifyMeetBtn.addEventListener("click", function () {
             sendMeetNotify();
@@ -141,13 +136,14 @@
         $(joinMeetBtn).css("margin-left","29.166666%");
         }
 
+
     function afterRecvAppStatus()
 	  {
         joinVideoMeet();
-       }
-    notifyMeetBtn.addEventListener('tap', function () {
-        sendMeetNotify();
-    });
+      }
+    //notifyMeetBtn.addEventListener("click", function () {
+     //   sendMeetNotify();
+  //  });
 
     function joinVideoMeet() {
         var meetId = '${videoMeetInfo.meetId}';
@@ -163,13 +159,6 @@
         }
         openAppWithJoinMeet(meetId, "", displayName);
     }
-
-    function hideTipContent() {
-        $("#tipContent").css("display","none");
-        $("#mainContent").show();
-        $("#joinMeetBtn").show();
-    }
-
 
     function sendMeetNotify() {
         $.ajax({
