@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,16 +32,10 @@ public class VideoMeetInfoServiceImpl implements VideoMeetInfoService {
         criteria.andChairmanPhoneEqualTo(phone);
 
         List<VideoMeetInfo> resultList = videoMeetInfoMapper.selectByExample(example);
-        PageInfo<VideoMeetInfo> pageInfo = new PageInfo<VideoMeetInfo>(resultList);
 
-       // if (pageInfo.getTotal() - (start-1)*size < 0)
-       // {
-        //    return new ArrayList<VideoMeetInfo>();
-       // }
-       // else
-      //  {
-       //     return pageInfo.getList();
-      //  }
+        PageInfo<VideoMeetInfo> pageInfo = new PageInfo<VideoMeetInfo>(resultList);
+        if (pageInfo.getTotal() - (start-1)*size < 0)
+           pageInfo.setList(Collections.emptyList());
         return pageInfo;
     }
 
@@ -50,13 +45,12 @@ public class VideoMeetInfoServiceImpl implements VideoMeetInfoService {
         List<VideoMeetInfoVO> resultList = videoMeetInfoMapper.selectByMemberPhone(phone);
         PageInfo<VideoMeetInfoVO> pageInfo = new PageInfo<VideoMeetInfoVO>(resultList);
 
-        //if (pageInfo.getTotal() - (start-1)*size < 0) {
-        //    return new ArrayList<VideoMeetInfoVO>();
-       // } else
-      //  {
-       //     return pageInfo.getList();
-       // }
-        return pageInfo;
+        if (pageInfo.getTotal() - (start-1)*size < 0)
+               pageInfo.setList(Collections.emptyList());
+
+            return pageInfo;
+
+        //return pageInfo;
     }
 
     @Override
@@ -73,7 +67,19 @@ public class VideoMeetInfoServiceImpl implements VideoMeetInfoService {
     }
 
     @Override
-    public int saveVideoMeetInfo(VideoMeetInfo info) {
+    public int saveVideoMeetInfo(VideoMeetInfo info)
+    {
         return videoMeetInfoMapper.insertAndGetMeetId(info);
     }
+
+
+
+
+    @Override
+    public int updateVideoMeetInfo(VideoMeetInfo info)
+    {
+        return videoMeetInfoMapper.updateByPrimaryKeySelective(info);
+    }
+
+
 }
