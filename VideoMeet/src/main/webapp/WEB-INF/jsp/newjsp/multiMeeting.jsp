@@ -9,15 +9,14 @@
 	<link rel="stylesheet" href="/css/animate.css">
 	<style>
 		.item-time{
-			color:rgb(0, 197, 195);
-			font-size:16px;
-		}
-		@media (min-width:992px){
-			.list-container{
-				position:relative;
-				top:-90px;
-			}
-		}
+            color:rgb(0, 197, 195);
+            font-size:16px;
+        }
+        @media (min-width:992px){
+            .item-time{
+                font-size: 20px;
+            }
+        }
 	</style>
 </head>
 <body>
@@ -44,17 +43,7 @@
 			<div class="list list-2 text-left animated"></div>
 		</div>
 		<div class="add hidden-md hidden-lg"><a href="createMeeting.html"><img src="/img/add-2.png" alt=""></a></div>
-
-		<!-- 分页器，此处用的是bootstrap的样式，所以没有去除a标签  -->
-		<ul class="pagination hidden-xs hidden-sm">
-			<li><a href="">&laquo;</a></li>
-			<li class="active"><a>1</a></li>
-			<li><a>2</a></li>
-			<li><a>3</a></li>
-			<li><a>4</a></li>
-			<li><a>5</a></li>
-			<li><a>&raquo;</a></li>
-		</ul>	
+        <div class="to-top hidden-sm hidden-xs" title="回到顶部"><a href="#tab-container"><img src="/img/to-top.png" alt=""></a></div>
 	</div>
 </body>
 <script src="/js/jquery-3.2.1.min.js"></script>
@@ -203,6 +192,16 @@
                 }
             }
         });
+
+        window.onscroll = function(){
+           var scrollDistance= document.documentElement.scrollTop || document.body.scrollTop; 
+            if( scrollDistance >= 100 ) {
+                $('.to-top').show();
+            }else{
+                $('.to-top').hide();
+            }
+        }
+
     });
 </script>
 </html>
